@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.example.angularrestspringsecurity.rest.resources;
+package net.dontdrinkandroot.example.angularrestspringsecurityws.rest.resources;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,10 +32,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 
-//@Component
-@Controller
+@Component
+//@Controller
 @Path("/news")
-public class NewsEntryResource
+public class NewsEntryWsResource
 {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());

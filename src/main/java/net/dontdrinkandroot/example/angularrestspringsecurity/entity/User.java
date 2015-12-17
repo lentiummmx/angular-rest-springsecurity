@@ -5,19 +5,26 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-@javax.persistence.Entity
-public class User implements Entity, UserDetails
+@Entity
+@Table(name="\"User\"", schema="APP")
+public class User implements BaseEntity, UserDetails
 {
 
 	@Id
@@ -30,8 +37,12 @@ public class User implements Entity, UserDetails
 	@Column(length = 80, nullable = false)
 	private String password;
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	private Set<String> roles = new HashSet<String>();
+	//@ElementCollection(fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "user_role", schema="APP",
+			joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "ID") },
+			inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "ID") })
+	private Set<Role> roles = new HashSet<Role>();
 
 
 	protected User()
@@ -71,21 +82,39 @@ public class User implements Entity, UserDetails
 	}
 
 
-	public Set<String> getRoles()
+	public Set<Role> getRoles()
 	{
 		return this.roles;
 	}
 
 
-	public void setRoles(Set<String> roles)
+	public void setRoles(Set<Role> roles)
 	{
 		this.roles = roles;
 	}
 
 
-	public void addRole(String role)
+	public void addRole(Role role)
 	{
 		this.roles.add(role);
+	}
+
+
+	public Role getRole(String roleName)
+	{
+		Role searchRole = null;
+		for (Role role : roles) {
+			if(role.getName().equals(roleName)) {
+				searchRole = role;
+			}
+		}
+		
+		if(searchRole != null) {
+			return searchRole;
+		} else {
+			searchRole = new Role(roleName);
+			return searchRole;
+		}
 	}
 
 
@@ -105,15 +134,15 @@ public class User implements Entity, UserDetails
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities()
 	{
-		Set<String> roles = this.getRoles();
+		Set<Role> roles = this.getRoles();
 
 		if (roles == null) {
 			return Collections.emptyList();
 		}
 
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-		for (String role : roles) {
-			authorities.add(new SimpleGrantedAuthority(role));
+		for (Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
 
 		return authorities;

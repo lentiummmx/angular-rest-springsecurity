@@ -3,8 +3,12 @@ package net.dontdrinkandroot.example.angularrestspringsecurity.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import net.dontdrinkandroot.example.angularrestspringsecurity.JsonViews;
 
@@ -16,8 +20,9 @@ import org.codehaus.jackson.map.annotate.JsonView;
  * 
  * @author Philip W. Sorst <philip@sorst.net>
  */
-@javax.persistence.Entity
-public class NewsEntry implements Entity
+@Entity
+@Table(schema="APP")
+public class NewsEntry implements BaseEntity
 {
 
 	@Id
@@ -25,6 +30,7 @@ public class NewsEntry implements Entity
 	private Long id;
 
 	@Column
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
 	@Column

@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.example.angularrestspringsecurity.rest.resources;
+package net.dontdrinkandroot.example.angularrestspringsecurityws.rest.resources;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,10 +28,10 @@ import net.dontdrinkandroot.example.angularrestspringsecurity.transfer.TokenTran
 import net.dontdrinkandroot.example.angularrestspringsecurity.transfer.UserTransfer;
 
 
-//@Component
-@Controller
+@Component
+//@Controller
 @Path("/user")
-public class UserResource
+public class UserWsResource
 {
 
 	@Autowired

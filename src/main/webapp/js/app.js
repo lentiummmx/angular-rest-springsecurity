@@ -76,16 +76,17 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services'])
 		});
 		
 		$rootScope.hasRole = function(role) {
+			var ROLE_PREFIX = 'ROLE_';
 			
 			if ($rootScope.user === undefined) {
 				return false;
 			}
 			
-			if ($rootScope.user.roles[role] === undefined) {
+			if ($rootScope.user.roles[ROLE_PREFIX + role] === undefined) {
 				return false;
 			}
 			
-			return $rootScope.user.roles[role];
+			return $rootScope.user.roles[ROLE_PREFIX + role];
 		};
 		
 		$rootScope.logout = function() {

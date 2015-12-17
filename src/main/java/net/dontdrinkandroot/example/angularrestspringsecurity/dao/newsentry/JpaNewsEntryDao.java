@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 import net.dontdrinkandroot.example.angularrestspringsecurity.dao.JpaDao;
 import net.dontdrinkandroot.example.angularrestspringsecurity.entity.NewsEntry;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author Philip W. Sorst <philip@sorst.net>
  */
+@Repository
 public class JpaNewsEntryDao extends JpaDao<NewsEntry, Long> implements NewsEntryDao
 {
 

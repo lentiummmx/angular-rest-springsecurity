@@ -13,9 +13,11 @@ import net.dontdrinkandroot.example.angularrestspringsecurity.entity.User;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
+@Repository
 public class JpaUserDao extends JpaDao<User, Long> implements UserDao
 {
 

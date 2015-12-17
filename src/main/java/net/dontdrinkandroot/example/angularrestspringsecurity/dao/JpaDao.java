@@ -8,12 +8,12 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import net.dontdrinkandroot.example.angularrestspringsecurity.entity.Entity;
-
 import org.springframework.transaction.annotation.Transactional;
 
+import net.dontdrinkandroot.example.angularrestspringsecurity.entity.BaseEntity;
 
-public class JpaDao<T extends Entity, I> implements Dao<T, I>
+
+public class JpaDao<T extends BaseEntity, I> implements Dao<T, I>
 {
 
 	private EntityManager entityManager;
