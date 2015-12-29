@@ -109,7 +109,7 @@ public class DataAccessConfig implements TransactionManagementConfigurer {
 		hbtJpaProperties.put("hibernate.generate_statistics", environment.getProperty("hibernate.generate_statistics"));
 
 		//hbtJpaProperties.put("hibernate.current_session_context_class", "thread");
-		//hbtJpaProperties.put("hibernate.current_session_context_class", "org.springframework.orm.hibernate4.SpringSessionContext");
+		hbtJpaProperties.put("hibernate.current_session_context_class", "org.springframework.orm.hibernate4.fix.SpringSessionContext");
 		
 		return hbtJpaProperties;
 	}
@@ -164,9 +164,16 @@ public class DataAccessConfig implements TransactionManagementConfigurer {
 		return localSessionFactoryBuilder.buildSessionFactory();
 	}
 	
-	@Bean
-	public HibernateTransactionManager hibernateTransactionManager() {
+	//@Bean
+	@Deprecated
+	public HibernateTransactionManager hibernateTransactionManagerDeprecated() {
 		HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager(sessionFactory());
+		return hibernateTransactionManager;
+	}
+	
+	@Bean
+	public org.springframework.orm.hibernate4.fix.HibernateTransactionManager hibernateTransactionManager() {
+		org.springframework.orm.hibernate4.fix.HibernateTransactionManager hibernateTransactionManager = new org.springframework.orm.hibernate4.fix.HibernateTransactionManager(sessionFactory());
 		return hibernateTransactionManager;
 	}
 	
